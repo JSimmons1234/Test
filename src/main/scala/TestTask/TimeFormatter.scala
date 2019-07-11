@@ -2,29 +2,43 @@ package TestTask
 
 object TimeFormatter {
 
-
-  def convertStringToTimeComponentList(time: String): List[String] = {
-    time.split(":").toList
-  }
-
-  def timeToString (hour: Int, minute: Int): String ={
-    hour + ":" + minute
-  }
-
-  def isTimePassed(list: List[String], time: List[String]): String={
-
-    val yes = "Tomorrow"
-    val no = "Today"
-
-    if (list(0) == "*" && list(1) == "*"){
-      no
-    }else if ( list(1) != "*" && list(1).toInt < time(0).toInt){
-      yes
-    }else if (list(0) != "*" && list(0).toInt > time(1).toInt && list(0).toInt < time(1).toInt){
-      yes
-    }else{
-      no
+  def convertStringToTimeList(time: String): List[String] = {
+    if (time.length == 5) {
+      time.split(":").toList
     }
-
+    else {
+      println("Invalid time format")
+      List("00", "00")
+    }
   }
+
+  def isHourPassed(fileList: List[String], time: List[String]): Boolean = {
+    fileList(1).toInt < time(0).toInt
+  }
+
+  def isMinutePassed(fileList: List[String], time: List[String]): Boolean = {
+    fileList(0).toInt < time(1).toInt
+  }
+
+  def isTimePassed(fileList: List[String], time: List[String]): Boolean = {
+
+    if (fileList(0) == "*" && fileList(1) == "*") {
+      false
+    } else if (fileList(1) != "*" && isHourPassed(fileList, time)) {
+      true
+    } else if (fileList(0) != "*" && isMinutePassed(fileList, time) && isHourPassed(fileList, time)) {
+      true
+    } else {
+      false
+    }
+  }
+
+  def todayTomorrow(boolean: Boolean): String = {
+    if (boolean == true) {
+      "Tomorrow"
+    } else {
+      "Today"
+    }
+  }
+
 }

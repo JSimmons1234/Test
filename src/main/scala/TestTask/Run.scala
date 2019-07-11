@@ -8,18 +8,12 @@ object Run {
 
   def main(args: Array[String]): Unit = {
 
-    val time = convertStringToTimeComponentList("10:20")
+    val time = convertStringToTimeList(scala.io.StdIn.readLine() )
 
-    val lines = readFile("C:/Users/Admin/IdeaProjects/Test/src/main/scala/TestTask/config.txt")
+    val lines = readFile("config.txt")
 
-    for (i <- 0 until lines.length){
-      println(beautifyOutput(processLine(readLine(lines(i)),time)) + "\n")
+    for (i <- 0 until lines.length) {
+      println(beautifyOutput(processLine(readLine(lines(i)), time)) + "\n")
     }
-
-
-
-
-
   }
-
 }
